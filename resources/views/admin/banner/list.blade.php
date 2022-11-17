@@ -6,13 +6,7 @@ rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVh
 @stop
 @section('content')
 <a href="{{route('banner.add')}}" class="nav-link">Thêm banner</a>
-<br><br>
-<form method="GET" style="width:400px; float:right">
-      <div class="input-group mb-3">
-  <input name="keyword" type="text" class="form-control" placeholder="Tìm kiếm...">
-  <button class="btn btn-success" type="submit" id="button-addon2">Tìm kiếm</button>
-</div>
-</form>
+<br>
 <div style="clear: both"></div>
 <table class="table table-boreder table-hover">
    <theader>
@@ -46,6 +40,4 @@ rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVh
 </footer>
 @endsection
 @section('js')
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" 
-rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
 @stop

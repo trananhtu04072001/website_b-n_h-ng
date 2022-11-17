@@ -42,7 +42,7 @@ html, body {
     margin: 0;
     font-family: 'Roboto', sans-serif;
   }
-    
+
   .containerl {
     max-width: 1200px;
     margin: 0 auto;
@@ -54,7 +54,7 @@ html, body {
     width: 65%;
     position: relative;
   }
-    
+
   .right-column {
     width: 35%;
     margin-top: 60px;
@@ -66,7 +66,7 @@ html, body {
     opacity: 0;
     transition: all 0.3s ease;
   }
-    
+
   .left-column img.active {
     opacity: 1;
   }
@@ -96,15 +96,15 @@ html, body {
   .product-color {
     margin-bottom: 30px;
   }
-    
+
   .color-choose div {
     display: inline-block;
   }
-    
+
   .color-choose input[type="radio"] {
     display: none;
   }
-    
+
   .color-choose input[type="radio"] + label span {
     display: inline-block;
     width: 40px;
@@ -114,12 +114,12 @@ html, body {
     cursor: pointer;
     border-radius: 50%;
   }
-    
+
   .color-choose input[type="radio"] + label span {
     border: 2px solid #FFFFFF;
     box-shadow: 0 1px 3px 0 rgba(0,0,0,0.33);
   }
-    
+
   .color-choose input[type="radio"]#red + label span {
     background-color: #C91524;
   }
@@ -129,7 +129,7 @@ html, body {
   .color-choose input[type="radio"]#black + label span {
     background-color: #323232;
   }
-    
+
   .color-choose input[type="radio"]:checked + label span {
     background-image: url(images/check-icn.svg);
     background-repeat: no-repeat;
@@ -138,7 +138,7 @@ html, body {
   .cable-choose {
     margin-bottom: 20px;
   }
-    
+
   .cable-choose button {
     border: 2px solid #E1E8EE;
     border-radius: 6px;
@@ -149,19 +149,19 @@ html, body {
     cursor: pointer;
     transition: all .5s;
   }
-    
+
   .cable-choose button:hover,
   .cable-choose button:active,
   .cable-choose button:focus {
     border: 2px solid #86939E;
     outline: none;
   }
-    
+
   .cable-config {
     border-bottom: 1px solid #E1E8EE;
     margin-bottom: 20px;
   }
-    
+
   .cable-config a {
     color: white;
     text-decoration: none;
@@ -186,14 +186,14 @@ html, body {
     display: flex;
     align-items: center;
   }
-    
+
   .product-price span {
     font-size: 26px;
     font-weight: 300;
     color: #43474D;
     margin-right: 20px;
   } */
-    
+
   .cart-btn {
     display: inline-block;
     background-color: #7DC855;
@@ -212,12 +212,12 @@ html, body {
       flex-direction: column;
       margin-top: 60px;
     }
-    
+
     .left-column,
     .right-column {
       width: 100%;
     }
-    
+
     .left-column img {
       width: 300px;
       right: 0;
@@ -225,7 +225,7 @@ html, body {
       left: initial;
     }
   }
-    
+
   @media (max-width: 535px) {
     .left-column img {
       width: 220px;
@@ -257,8 +257,8 @@ html, body {
     margin-right: 20px;
   }
   .ordercus {
-    height: 500px;
     margin-top: 20px;
+      margin-bottom: 40px;
   }
   .ordercus table {
     width: 1000px;
@@ -278,4 +278,17 @@ html, body {
   .ordercus a {
     width: 150px;
   }
-  
+
+  /* .account ul li {
+    display: inline;
+    padding-right: 40px;
+  }
+  .account a {
+    color: black;
+  }
+  .account {
+    background-color: #f8f9fa;
+  }
+  .account ul {
+    float: right;
+  } */

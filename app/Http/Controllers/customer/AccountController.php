@@ -74,7 +74,7 @@ class AccountController extends Controller
 
 public function logout() {
     Auth::guard('web')->logout();
-    // Session::flush();
+    Session::flush();
     return redirect()->route('product.event');
 }
 }

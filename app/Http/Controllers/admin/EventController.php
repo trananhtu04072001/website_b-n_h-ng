@@ -53,4 +53,16 @@ class EventController extends Controller
         $event->delete();
         return redirect()->route('event.list');
     }
+
+    public function status($id) {
+        $event = EventProducts::find($id);
+        if($event->status == 1) {
+            $event->status = 0;
+        }
+        else {
+            $event->status = 1;
+        }
+        $event->save();
+        return redirect()->route('event.list');
+    }
 }

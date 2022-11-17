@@ -4,6 +4,10 @@
 @stop
 @section('content')
 <br>
+<div class="text-center">
+    <h2>Doanh thu theo tháng</h2>
+</div>
+<br>
 <div class="card-body">
   <table id="datatablesorder" class="text-center">
       <thead class="text">
@@ -11,7 +15,7 @@
               <th>Tháng</th>
               <th>Số đơn hàng</th>
               <th>Doanh thu</th>
-              {{-- <th colspan="2">Chi tiết</th> --}}
+              <th colspan="2">Chi tiết</th>
           </tr>
       </thead>
       <tbody>
@@ -20,9 +24,9 @@
               <td>Tháng {{$data->month}}</td>
               <td>{{$data->count}} Đơn hàng/Tháng</td>
               <td>{{number_format($data->total, 0, ',', '.')}} VND</td>
-              {{-- <td>
-              <a href=""><button class="btn btn-primary">Chi tiết</button></a>
-              </td> --}}
+              <td>
+              <a href="{{route('admin.turnoverdetail',$data->month)}}"><button class="btn btn-primary">Chi tiết</button></a>
+              </td>
           </tr>
           @empty
           <tr>

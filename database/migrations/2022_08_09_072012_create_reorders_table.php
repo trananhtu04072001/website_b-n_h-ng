@@ -13,20 +13,18 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('order_detail', function (Blueprint $table) {
+        Schema::create('reorders', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('order_id')->unsigned();
-            $table->foreign('order_id')->references('id')->on('orders');
-            $table->integer('receiver_id')->unsigned();
-            $table->foreign('receiver_id')->references('id')->on('receiver');
             $table->integer('product_id')->unsigned();
             $table->foreign('product_id')->references('id')->on('products');
-            $table->integer('payment_id')->unsigned();
-            $table->foreign('payment_id')->references('id')->on('payment_methods');
+            $table->string('des');
+            $table->integer('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users');
             $table->integer('ship_id')->unsigned();
             $table->foreign('ship_id')->references('id')->on('ships');
-            $table->string('single_quantity');
-            $table->string('total');
+            $table->integer('order_id')->unsigned();
+            $table->foreign('order_id')->references('id')->on('orders');
+            $table->tinyInteger('status')->default('1');
             $table->timestamps();
         });
     }
@@ -38,6 +36,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('order_detail');
+        Schema::dropIfExists('reorders');
     }
 };

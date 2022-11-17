@@ -12,9 +12,14 @@ class Product extends Authenticatable
 
     protected $table = 'products';
 
-    public function Orderdetail() {
+    public function orderdetail() {
         return $this->hasMany('App\Models\Orderdetail');
     }
+
+    public function import() {
+        return $this->hasMany('App\Models\Importdetail','id_product');
+    }
+
     protected $fillable = [
         'name',
         'price',
@@ -23,6 +28,6 @@ class Product extends Authenticatable
         'view',
         'status',
         'id_brand',
-        'id_type', 
+        'id_type',
     ];
 }

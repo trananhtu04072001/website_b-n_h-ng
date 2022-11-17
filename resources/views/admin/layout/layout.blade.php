@@ -12,8 +12,9 @@
     <link href="{{ asset('css/styles.css') }}" rel="stylesheet" />
     <link rel="stylesheet" href="{{ asset('css/admin.css')}}">
     <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" 
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"
 rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+@yield('css')
 </head>
 
 <body class="sb-nav-fixed">
@@ -38,6 +39,7 @@ rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVh
                     aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                     <li><a class="dropdown-item" href="#!">Cài đặt</a></li>
+                    @if (Auth::guard('admin')->user() != null)
                     @if (Auth::guard('admin')->user()->id_level == 1)
                     <li><a class="dropdown-item" href="{{ route('admin.regis') }}">Đăng kí</a></li>
                     <li>
@@ -49,6 +51,7 @@ rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVh
                         <hr class="dropdown-divider" />
                     </li>
                     <li><a class="dropdown-item" href="{{ route('checkout.admin') }}">Đăng xuất</a></li>
+                    @endif
                     @endif
                 </ul>
             </li>
@@ -135,7 +138,7 @@ rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVh
                             data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
                                 <a class="nav-link" href="{{ route('event.list')}}">Sự kiện</a>
-                                <a class="nav-link" href="#">voucher</a>
+                                {{-- <a class="nav-link" href="#">voucher</a> --}}
                             </nav>
                         </div>
                         <a class="nav-link collapsed" href="{{route('ship.list')}}" data-bs-toggle="collapse" data-bs-target="#collapseLa"
@@ -172,6 +175,7 @@ rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVh
                             data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
                                 <a class="nav-link" href="{{route('admins.show_order')}}">Đơn hàng</a>
+                                <a class="nav-link" href="{{route('admin.reorder')}}">Đơn hoàn trả</a>
                                 <a class="nav-link" href="{{route('admin.turnover')}}">Doanh thu</a>
                             </nav>
                         </div>

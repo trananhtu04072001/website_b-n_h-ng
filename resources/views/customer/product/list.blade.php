@@ -1,10 +1,22 @@
 @extends('customer.layout.layout')
 @section('title','Tất cả sản phẩm')
+@section('css')
+<style>
+    .product img {
+        height: 300px;
+    }
+</style>
+@stop
 @section('content')
 <div class="container px-4 px-lg-5 mt-5">
     <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-@foreach ($data as $product)
+@foreach ($products as $product)
 <div class="col mb-5">
+    @if ($product->import->sum('quantity') > 0 && $product->status == 1)
+    <span class="badge bg-success">Còn hàng</span>
+    @else
+    <span class="badge bg-danger">Hết hàng</span>
+    @endif
     <div class="listproduct card h-100">
         <!-- Sale badge-->
         {{-- <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">giảm {{$event->discount}} %</div> --}}
@@ -38,6 +50,9 @@
     </div>
 </div>
 @endforeach
-    </div>
+    </div>  
 </div>
+<footer class="text-center">
+    {{ $products->withQueryString()->links() }}
+    </footer>
 @endsection

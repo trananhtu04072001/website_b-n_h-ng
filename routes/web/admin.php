@@ -10,9 +10,9 @@ use App\Http\Controllers\admin\ImportController;
 use App\Http\Controllers\admin\InforController;
 use App\Http\Controllers\admin\LevelController;
 use App\Http\Controllers\admin\LoginController;
-use App\Http\Controllers\admin\MonthProductController;
 use App\Http\Controllers\admin\OrderController;
 use App\Http\Controllers\admin\PaymentController;
+use App\Http\Controllers\admin\PayPalController;
 use App\Http\Controllers\admin\ProductController;
 use App\Http\Controllers\admin\ShipController;
 use App\Http\Controllers\admin\TypeController;
@@ -69,6 +69,7 @@ Route::prefix('admin')->group(function () {
     Route::get('/eventadd', [EventController::class, 'addevent'])->name('add.event');
     Route::post('/eventadd', [EventController::class, 'formadd']);
     Route::get('/eventdelete/{id}', [EventController::class, 'destroy'])->name('destroy.event');
+    Route::get('/eventstatus/{id}',[EventController::class, 'status'])->name('event.status');
     // ship
     Route::get('/listship', [ShipController::class, 'list'])->name('ship.list');
     Route::get('/addship', [ShipController::class, 'add'])->name('ship.add');
@@ -105,7 +106,17 @@ Route::prefix('admin')->group(function () {
     // Doanh thu
     Route::get('/reven', [HomeController::class, 'index'])->name('admin.reven');
     Route::get('/turnover', [OrderController::class, 'turnover'])->name('admin.turnover');
+    Route::get('/turnoverdetail/{month}', [OrderController::class, 'turnoverdetail'])->name('admin.turnoverdetail');
+    Route::get('/reorder/' , [OrderController::class, 'reorder'])->name('admin.reorder');
+    Route::get('/reorderdetail/{id}' , [OrderController::class, 'reorderdetail'])->name('admin.reorderdetail');
+    Route::get('/reorderstatus/{id}' , [OrderController::class, 'reorderstatus'])->name('admin.reorderstatus');
     // PDF
     Route::get('/importpdf/{id}',[ImportController::class, 'importpdf'])->name('import.pdf');
     Route::get('/orderpdf/{id}', [OrderController::class, 'orderPDF'])->name('admin.order.pdf');
+
+    // paypal
+    Route::get('create-transaction', [PayPalController::class, 'createTransaction'])->name('createTransaction');
+    Route::get('process-transaction', [PayPalController::class, 'processTransaction'])->name('processTransaction');
+    Route::get('success-transaction', [PayPalController::class, 'successTransaction'])->name('successTransaction');
+    Route::get('cancel-transaction', [PayPalController::class, 'cancelTransaction'])->name('cancelTransaction');
 });

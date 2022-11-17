@@ -73,9 +73,9 @@
                                     <span>Tên TK: Trần Anh Tú</span>
                                 </div>
                             </div>
-                            <input type="hidden" name="total" value="" id="totalinput">
                         </div>
                         <button class="btn karl-checkout-btn" type="submit">Tạo hoá đơn</button>
+                        <input type="hidden" name="total" value="" id="totalinput">
                     </form>
                 </div>
             </div>
@@ -90,9 +90,11 @@
 
                     <ul class="order-details-form mb-4">
                         <li><span>SL sản phẩm</span> <span>Tạm tính</span></li>
-                        <li><span>{{$count}} Sản phẩm</span> <span>{{number_format($total, 0, ',', '.')}} VND</span></li>
+                        @foreach ($order as $value)
+                        <li><span>{{$value->quantity}} Sản phẩm</span> <span>{{number_format($value->total, 0, ',', '.')}} VND</span></li>
+                        @endforeach
                         <li><span>Đơn vị vận chuyển</span> <span id="ship_name"></span></li>
-                        <li><span>Tổng tiền thanh toán</span> <span id="total">{{number_format($total, 0, ',', '.')}} VND</span></li>
+                        <li><span>Tổng tiền thanh toán</span> <span id="total"></span></li>
                     </ul>
                 </div>
             </div>
@@ -105,7 +107,7 @@
 @section('js')
 <script type="text/javascript">
 var ships = @json($data3);
-var total = {{$total}};
+var total = {{$value->total}};
    function moneyfomart(value) {
     let numbe = value.toLocaleString("it-IT", {style:"currency", currency:"VND"});
     return numbe;

@@ -36,6 +36,8 @@ class Orderdetail extends Model
         'product_id',
         'payment_id',
         'ship_id',
+        'color',
+        'size',
         'single_quantity',
         'total',
     ];

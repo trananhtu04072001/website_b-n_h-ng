@@ -8,7 +8,10 @@
       <p>{{ session('success') }}</p>
 </div>
 @endif
-<br>
+<div class="card-header">
+  <i class="fas fa-table me-1"></i>
+  Danh sách Đơn hàng:
+</div>
 <div class="card-body">
   <table id="datatablesorder" class="text-center">
       <thead>
@@ -18,7 +21,8 @@
               <th>Số lượng</th>
               <th>Tổng tiền</th>
               <th>Ghi chú</th>
-              <th>Tình trạng</th>
+              <th>Trạng thái</th>
+              <th>Cập nhật</th>
               <th colspan="2">Thao tác</th>
           </tr>
       </thead>
@@ -32,32 +36,36 @@
               <td>{{$order->des}}</td>
               <td>
                 @if ($order->status == 0)
-                <a href="{{route('admin.order.status',$order->id)}}" class="btn btn-danger">Đơn hàng đã huỷ</a>
+                <h6 class="link-danger">Đơn hàng đã huỷ</h6>
                 @endif
                 @if ($order->status == 1)
-                <a href="{{route('admin.order.status',$order->id)}}" class="btn btn-warning">xác nhận</a>
+                <h6 class="link-warning">xác nhận đơn</h6>
                 @endif
                 @if ($order->status == 2)
-                <a href="{{route('admin.order.status',$order->id)}}" class="btn btn-secondary">Đã xác nhận</a>
+                <h6 class="link-secondary">Đã xác nhận</h6>
                 @endif
                 @if ($order->status == 3)
-                <a href="{{route('admin.order.status',$order->id)}}" class="btn btn-secondary">Đang chuẩn bị hàng</a>
+                <h6 class="link-secondary">Đang chuẩn bị hàng</h6>
                 @endif
                 @if ($order->status == 4)
-                <a href="{{route('admin.order.status',$order->id)}}" class="btn btn-secondary">Đã giao cho dvvc</a>
+                <h6 class="link-secondary">Đã giao cho shipper</h6>
                 @endif
                 @if ($order->status == 5)
-                <a href="#" class="btn btn-secondary">Xác nhận đã nhận hàng</a>
+                <h6 class="link-secondary">Xác nhận đã nhận hàng</h6>
                 @endif
                 @if ($order->status == 6)
-                <a href="#" class="btn btn-success">Đơn hàng thành công</a>
+                <h6 class="link-success">Đơn hàng thành công</h6>
                 @endif
                 {{-- @if ($order->status == 7)
                 <a href="#" class="btn btn-success">Đơn hàng thành công</a>
                 @endif --}}
               </td>
+              <td>
+                <a href="{{route('admin.order.status',$order->id)}}" class="btn btn-primary">Cập nhật</a>
+              </td>
                 <td>
-                  <a href="{{ route('admin.detail_order',$order->id)}}"><button class="btn btn-primary">Chi tiết</button></a>
+                  {{-- <a href="{{ route('admin.detail_order',$order->id)}}"><button class="btn btn-primary">Chi tiết</button></a> --}}
+                  <a href="{{ route('admin.detail_order',$order->id)}}"><i class="fa-solid fa-eye"></i></a>
                 </td>
           </tr>
           @empty

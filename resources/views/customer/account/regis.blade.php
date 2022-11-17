@@ -1,5 +1,12 @@
 @extends('customer.layout.layout')
 @section('title','Đăng kí')
+@section('css')
+{{-- <style>
+  .regiscus {
+    min-height: 650px;
+  }
+</style>
+@stop --}}
 @section('content')
 <div class="regiscus">
     @if ($errors->any())

@@ -16,7 +16,7 @@ use PDF;
 class ImportController extends Controller
 {
     public function history() {
-        $data = Import::with('admin:id,name')->get();
+        $data = Import::with('admin:id,name')->orderBy('id','desc')->get();
         return view('admin.import.history',['data'=>$data]);
     }
 
@@ -79,12 +79,11 @@ class ImportController extends Controller
 
     public function productlist() {
         $data1 = Importdetail::select(DB::raw('id_product, SUM(quantity) as sum'))->groupBy('id_product')->with('product:id,name')->get();
-        $data2 = Orderdetail::select(DB::raw('product_id, SUM(single_quantity) as sum'))->groupBy('product_id')->with('product:id,name,status')->get();
+        $data2 = Orderdetail::select(DB::raw('product_id, SUM(single_quantity) as sum'))->groupBy('product_id')->with(['product:id,name,status'])->get();
         return view('admin.import.product',[
             'data1' => $data1,
             'data2' => $data2,
         ]);
-        //  return response()->json($product, 200);
     }
 
     public function updateimport($id) {

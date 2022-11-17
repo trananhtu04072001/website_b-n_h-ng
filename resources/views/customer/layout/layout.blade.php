@@ -16,16 +16,17 @@
         <link rel="stylesheet" href="{{asset('css/cart.css')}}">
         <link rel="stylesheet" href="{{asset('css/carttwo.css')}}">
         <link rel="stylesheet" href="{{asset('css/home.css')}}">
+        @yield('css')
     </head>
     <body>
         <!-- Navigation-->
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container px-4 px-lg-5">
-                <a class="navbar-brand" href="#!">Trang chủ</a>
+                <a class="navbar-brand" href="{{route('product.event')}}">Trang chủ</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-                        <li class="nav-item"><a class="nav-link activel" aria-current="page" href="#!">Danh mục</a></li>
+                        {{-- <li class="nav-item"><a class="nav-link activel" aria-current="page" href="">Danh mục</a></li> --}}
                         <li class="nav-item"><a class="nav-link activel" aria-current="page" href="{{route('product.listcus',$id=0)}}">Tất cả sản phẩm</a></li>
                         @foreach ($data1 as $item)
                         <li class="nav-item"><a class="nav-link" href="{{route('product.listcus',$item->id)}}">{{$item->name}}</a></li>
@@ -34,6 +35,7 @@
                         @if (Auth::guard('web')->user() != null)
                         <li class="nav-item"><a class="nav-link" href="{{route('order.index',Auth::guard('web')->user()->id)}}">Đơn hàng</a></li>
                         <li class="nav-item"><a class="nav-link" href="{{route('order.history',Auth::guard('web')->user()->id)}}">LS mua hàng</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{route('order.reorder.list',Auth::guard('web')->user()->id)}}">Đơn hoàn trả</a></li>
                         {{-- @endif --}}
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Tài khoản</a>
@@ -68,32 +70,6 @@
             </span>
             @endif
         </nav>
-        <!-- Header-->
-        {{-- <header class="bg-dark py-5">
-            <div class="container px-4 px-lg-5 my-5">
-                <div class="contain">
-                @foreach ($data3 as $banner)
-                   <img src="{{ asset($banner->image)}}" alt="{{$banner->title}}" style="width:100%" id="{{$banner->id}}" class="slide" idx="{{$banner->id}}">
-                   @endforeach
-                <img class="btn-change" id="next" src="icon/next.png" alt="next">
-                <img class="btn-change" id="prev" src="icon/prev.png" alt="prev">
-                </div>
-                <br>
-                <div class="butto">
-                <div class="change-img text-center">
-                    <button class="active">1</button>
-                    <button>2</button>
-                    <button>3</button>
-                    <button>4</button>
-                </div>
-                </div>
-                <div class="text-center text-white">
-                    <h1 class="display-4 fw-bolder">Shop in style</h1>
-                    <p class="lead fw-normal text-white-50 mb-0">With this shop hompeage template</p>
-                </div>
-            </div>
-        </header> --}}
-        <!-- Section-->
       <tbody>
         @section('content')
         @show

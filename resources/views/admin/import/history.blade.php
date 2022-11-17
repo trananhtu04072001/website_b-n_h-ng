@@ -12,6 +12,7 @@
               <th>Mã nhập</th>
               <th>Người nhập</th>
               <th>Trạng thái</th>
+              <th>Cập nhật</th>
               <th colspan="2">Thao tác</th>
           </tr>
       </thead>
@@ -23,10 +24,13 @@
               <td>{{$item->admin->name}}</td>
               <td>
                 @if ($item->status == 2)
-                <a href="{{ route('admin.import.status', $item->id) }}" class="btn btn-success">Đã thanh toán</a>
+                <h6 class="link-success">Đã thanh toán</h6>
                 @else
-                <a href="{{ route('admin.import.status', $item->id)}}" class="btn btn-danger">Chưa thanh toán</a>
+                <h6 class="link-danger">Chưa thanh toán</h6>
                 @endif
+            </td>
+            <td>
+              <a href="{{ route('admin.import.status', $item->id)}}" class="btn btn-primary">Cập nhật</a>
             </td>
                 <td>
                   <a href="{{ route('admin.import.detail',$item->id)}}"><button class="btn btn-primary">chi tiết</button></a>

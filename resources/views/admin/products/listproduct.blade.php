@@ -21,6 +21,7 @@ rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVh
                <th>Tên</th>
                <th>Tình trạng</th>
                <th>Thao tác</th>
+               <th>Chi tiết</th>
            </tr>
        </thead>
        <tbody>
@@ -32,15 +33,17 @@ rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVh
                </td>
                <td>
                 @if ($item->status == 1)
-                <a href="" class="btn btn-success">Còn hàng</a>
+                <h6 class="link-success">Còn hàng</h6>
                 @else
-                <a href="" class="btn btn-danger">Hết hàng</a>
+                <h6 class="link-danger">Hết hàng</h6>
                 @endif
                </td>
                  <td>
-                  <a href="{{ route('product.detail',$item->id)}}"><button class="btn btn-primary">chi tiết</button></a>
                   <a href="{{ route('product.update',$item->id)}}"><button class="btn btn-primary">Sửa</button></a>
                   <a href="{{ route('product.destroy',$item->id)}}"><button class="btn btn-primary">Xoá</button></a>
+                 </td>
+                 <td>
+                    <a href="{{ route('product.detail',$item->id)}}"><i class="fa-solid fa-eye"></i></a>
                  </td>
            </tr>
            @empty

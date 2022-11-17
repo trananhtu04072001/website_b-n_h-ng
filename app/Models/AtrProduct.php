@@ -15,4 +15,12 @@ class AtrProduct extends Model
         'id_product',
         'id_atr',
     ];
+
+    public function product() {
+        return $this->belongsTo('App\Models\Product','id_product');
+    }
+
+    public function atr() {
+        return $this->belongsTo('App\Models\Atribute','id_atr');
+    }
 }

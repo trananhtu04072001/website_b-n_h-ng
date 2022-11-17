@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\customer;
 
 use App\Http\Controllers\Controller;
+use App\Models\AtrProduct;
 use App\Models\Banner;
+use App\Models\EventProducts;
 use App\Models\Image;
+use App\Models\Importdetail;
 use App\Models\Infor;
 use App\Models\Product;
 use App\Models\Type;
@@ -17,8 +20,8 @@ class ProductController extends Controller
     public function detail($id) {
         $data1 = Type::get();
         $data2 = Infor::get();
-        $data3 = DB::table('atrproducts')->join('products','atrproducts.id_product','=','products.id')->join('atributes','atrproducts.id_atr','=','atributes.id')
-        ->select('products.id','atributes.value as value','atributes.id_atrgroup as id_atrgroup','atributes.id as idatr')->where('products.id',$id)->get();
+        $data3 = AtrProduct::with(['product:id,name,price,image,des','atr:id,id_atrgroup,value'])->where('id_product',$id)->get();
+        $data6 = Importdetail::select(DB::raw('id_product, SUM(quantity) as sum'))->groupBy('id_product')->with('product:id,name')->get();
         $data = Product::where('id',$id)->get();
         $data4 = Image::where('id_product',$id)->get();
         $data5['count'] = Cart::getcontent()->count();
@@ -32,6 +35,7 @@ class ProductController extends Controller
             'data' => $data,
             'data3' => $data3,
             'data4' => $data4,
+            'data6' => $data6,
         ]);
     }
 
@@ -40,11 +44,9 @@ class ProductController extends Controller
         $data2 = Infor::get();
         $data3 = Banner::get();
         $data4['count'] = Cart::getcontent()->count();
-        $data = DB::table('eventproducts')->join('events','eventproducts.id_event','=','events.id')->join('products','eventproducts.id_product','=','products.id')
-        ->select('events.name as event','products.name as name','products.price as price','products.image as image','products.id as id','eventproducts.discount as discount',
-                  'eventproducts.start as start','eventproducts.end as end')->get();
-
-        $view = Product::orderBy('view')->where('view','>','0')->limit(10)->get();
+        $data4['cart'] = Cart::getcontent();
+        $data = EventProducts::with(['event:id,name','product:id,name,price,image'])->get();
+        $view = Product::with('import')->orderBy('view')->where('view','>','0')->limit(10)->get();
         return view('customer.layout.home',$data4,[
             'data1' => $data1,
             'data2' => $data2,
@@ -54,20 +56,21 @@ class ProductController extends Controller
         ]);
     }
 
-    public function list($id) {
+    public function listproduct($id) {
         $data1 = Type::get();
         $data2 = Infor::get();
         $data3['count'] = Cart::getcontent()->count();
+        $products = null;
         if($id==0){
-            $data = Product::where('status','1')->simplepaginate();
-        }
+            $products = Product::with('import')->where('status', '1')->simplePaginate(10);
+           }
         else {
-        $data = Product::where('status','1')->where('id_type',$id)->simplepaginate(10);
+        $products = Product::with(['import'])->where('status','1')->where('id_type',$id)->simplepaginate(10);
         }
         return view('customer.product.list',$data3,[
             'data1' => $data1,
             'data2' => $data2,
-            'data' => $data,
+            'products' => $products,
         ]);
     }
 }

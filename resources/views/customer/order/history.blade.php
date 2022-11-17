@@ -4,13 +4,16 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 @stop
 @section('content')
+<h2 class="text-center">Lịch sử mua hàng</h2>
+<br>
 <div class="ordercus">
-    <table>
+    <table class="table table-striped">
         <tr>
             <th>ID</th>
             <th>Số lượng</th>
             <th>Ghi chú</th>
-            <th>Tình trạng</th>
+            <th>Trạng thái</th>
+            <th>Cập nhật</th>
             <th colspan="2">Thao tác</th>
         </tr>
         @foreach ($order as $val)
@@ -19,32 +22,22 @@
                 <td>{{$val->quantity}} sản phẩm</td>
                 <td>{{$val->des}}</td>
                 <td>
-                    @if ($val->status == 0)
-                    <a href="{{route('order.status',$val->id)}}" class="btn btn-danger">Mua lại</a>
-                    @endif
-                    @if ($val->status == 1)
-                    <a href="#" class="btn btn-warning">Đợi xác nhận</a>
-                    @endif
-                    @if ($val->status == 2)
-                    <a href="#" class="btn btn-secondary">Đã xác nhận</a>
-                    @endif
-                    @if ($val->status == 3)
-                    <a href="#" class="btn btn-secondary">Đang chuẩn bị hàng</a>
-                    @endif
-                    @if ($val->status == 4)
-                    <a href="#" class="btn btn-secondary">Giao hàng</a>
-                    @endif
-                    @if ($val->status == 5)
-                    <a href="{{route('order.status',$val->id)}}" class="btn btn-secondary">Xác nhận đã nhận hàng</a>
-                    @endif
+                  @if ($val->status == 0)
+                  <h6 href="#" class="link-danger">Đã huỷ</h6>
+                  @endif
                     @if ($val->status == 6)
-                    <a href="#" class="btn btn-success">Đơn hàng thành công</a>
-                    <a href="{{route('order.rebuy',$val->id)}}" class="btn btn-success" name="rebuy">Mua lại</a>
+                    <h6 class="link-success">Đơn hàng thành công</h6>
                     @endif
                 </td>
                 <td>
+                  @if ($val->status == 0)
+                  <a href="{{route('order.status',$val->id)}}" class="btn btn-success">Đặt lại</a>
+                  @endif
+                    @if ($val->status == 6)
+                    <a href="{{route('order.rebuy',$val->id)}}" class="btn btn-success">Mua lại</a>
+                    @endif
                     @if($val->status == 1) 
-                        <a href="{{route('order.status',$val->id)}}" class="btn btn-secondary">Huỷ đơn hàng</a>
+                    <a href="{{route('order.status',$val->id)}}" class="btn btn-secondary">Huỷ đơn hàng</a>
                     @endif
                 </td>
                 <td>

@@ -33,6 +33,10 @@ rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVh
             <br>
             {{number_format($order->product->price, 0, ',', '.')}} VND
             <br>
+            <span>Kích cỡ: {{$order->size}}</span>
+            <br>
+            <span>Màu sắc: {{$order->color}}</span>
+            <br>
             <span>Số lượng: {{$order->single_quantity}}</span>
         </td>
         @endforeach

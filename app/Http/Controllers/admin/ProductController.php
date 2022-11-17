@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Storage;
 class ProductController extends Controller
 {
     function list(){
-        $data = Product::simplepaginate(5);
+        $data = Product::get();
         return view('admin.products.listproduct',['data' => $data]);
     }
 
@@ -36,14 +36,6 @@ class ProductController extends Controller
         $product = new Product();
         $product->name = $req->name;
         $product->price = $req->price;
-        // if($req->hasFile('image')){
-        //     $file = $req->file('image');
-        //     $dir = date('Y/m/d');
-        //     $path = Storage::disk('public')->path($dir);
-        //     $imageName = time().'.'.$file->getClientOriginalExtension();
-        //     $file->move($path, $imageName);
-        //     $product->image = Storage::disk('public')->url($dir . "/" . $imageName);
-        // }
         if($req->hasFile('image')){
             $file = $req->file('image');
             // $path = public_path().'/storage/';
@@ -63,15 +55,10 @@ class ProductController extends Controller
                 'id_atr'=> $item,
             ]);
         }
-
-        // $files = $req->file('images');
-        // dd($files);
-        // $productImage = new Image();
         if($req->hasFile('images')){
             $files = $req->file('images');
             foreach($files as $file){
                 $paths = 'storage/imagedetail';
-                // $imageNames = time().$file->getClientOriginalName().'.'.$file->getClientOriginalExtension();
                 $imageNames = $file->getClientOriginalName();
                 $image = $file->move($paths,$imageNames);
                 $productImage = new Image();
@@ -115,14 +102,6 @@ class ProductController extends Controller
         $product = Product::find($id);
         $product->name = $req->name;
         $product->price = $req->price;
-        // if($req->hasFile('image')){
-        //     $file = $req->file('image');
-        //     $dir = date('Y/m/d');
-        //     $path = Storage::disk('public')->path($dir);
-        //     $imageName = time().'.'.$file->getClientOriginalExtension();
-        //     $file->move($path, $imageName);
-        //     $product->image = Storage::disk('public')->url($dir . "/" . $imageName);
-        // }
         if($req->hasFile('image')){
             $file = $req->file('image');
             // $path = public_path().'/storage/';
@@ -148,7 +127,6 @@ class ProductController extends Controller
             $files = $req->file('images');
             foreach($files as $file){
                 $paths = 'storage/imagedetail';
-                // $imageNames = time().'.'.$file->getClientOriginalExtension();
                 $imageNames = $file->getClientOrginalName();
                 $imagede = $file->move($paths,$imageNames);
                 $productImage = Image::where('id_product',$id);

@@ -24,7 +24,7 @@ class Order extends Model
     }
 
     public function orderDetail() {
-        return $this->hasMany('App\Models\Orderdetail','order_id');
+        return $this->hasMany('App\Models\Orderdetail');
     }
 
     protected $fillable = [

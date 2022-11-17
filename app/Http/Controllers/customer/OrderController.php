@@ -8,6 +8,7 @@ use App\Models\Order;
 use App\Models\Orderdetail;
 use App\Models\Payment;
 use App\Models\Product;
+use App\Models\Reorder;
 use App\Models\Ship;
 use App\Models\Type;
 use Gloudemans\Shoppingcart\Facades\Cart;
@@ -21,7 +22,7 @@ class OrderController extends Controller
         $data1 = Type::get();
         $data2 = Infor::get();
         $data5['count'] = Cart::getcontent()->count();
-        $order = Order::with('users:id,name')->where('id_user',$id)->where('status','!=',6)->get();
+        $order = Order::with('users:id,name')->where('id_user',$id)->where('status','!=',6)->where('status','!=',7)->Where('status','!=',0)->orderBy('id','desc')->get();
         return view('customer.order.list',$data5,
         [
             'order' => $order,
@@ -34,7 +35,7 @@ class OrderController extends Controller
         $data1 = Type::get();
         $data2 = Infor::get();
         $data5['count'] = Cart::getcontent()->count();
-        $order = Order::with('users:id,name')->where('id_user',$id)->where('status',6)->get();
+        $order = Order::with('users:id,name')->where('id_user',$id)->where('status',6)->orwhere('status',0)->get();
         return view('customer.order.history',$data5,[
             'order' => $order,
             'data1' => $data1,
@@ -78,20 +79,17 @@ class OrderController extends Controller
                 'name' => $product->product->name,
                 'price' => $product->product->price,
                 'quantity' => $product->single_quantity,
-                'weight' => 0,
-                'options' => array(
+                'attributes' => array(
                     'image' => $product->product->image,
+                    'color' => $product->color,
+                    'size' => $product->size,
                 )
             ]);
         }
         // $cart = Cart::getcontent();
         // dd($cart);
-        $data1 = Type::get();
-        $data2 = Infor::get();
-        $data3 = Ship::get();
         $data4['count'] = Cart::getcontent()->count();
         $data4['total'] = Cart::gettotal(0,"",'.');
-        $data5 = Payment::get();
         $reorder = new Order();
         $reorder->id_user = $order->id_user;
         $reorder->quantity = $order->quantity;
@@ -99,11 +97,57 @@ class OrderController extends Controller
         $reorder->status = 1;
         $reorder->des = '';
         $reorder->save();
-        return view('customer.checkout.infor',$data4,[
+        return redirect()->route('checkout.getinform',$id);
+    }
+
+    public function reorder($id) {
+        $detail = Orderdetail::with(['order:id,quantity','receiver:id,name,email,phone,address','product:id,name,price,image','payment:id,method','ship:id,name,price'])
+            ->where('order_id',$id)->get();
+        return response()->json($detail, 200);
+    }
+
+    public function reorderpush(Request $req ,$id) {
+        $reorde = new Reorder();
+        $reorde->product_id = $req->product;
+        $reorde->des = $req->des;
+        $reorde->user_id = Auth::guard('web')->user()->id;
+        $reorde->ship_id = $req->ship_id;
+        $reorde->order_id = $id;
+        $reorde->save();
+        $order = Order::find($id);
+        $order->status = 7;
+        $order->save();
+        return redirect()->route('order.index',Auth::guard('web')->user()->id)->with('success','Đã tạo đơn hoàn trả hàng');
+    }
+
+    public function listreorder($id) {
+        $data1 = Type::get();
+        $data2 = Infor::get();
+        $data3 = Ship::get();
+        $data4['count'] = Cart::getcontent()->count();
+        $data4['total'] = Cart::gettotal(0,"",'.');
+        $reorder = Reorder::where('user_id',$id)->get();
+        return view('customer.order.reorder',$data4,[
             'data1' => $data1,
             'data2' => $data2,
             'data3' => $data3,
-            'data5' => $data5,
+            'reorder' => $reorder
         ]);
+    }
+
+    public function reorderstatus($id) {
+        $reorder = Reorder::find($id);
+        // Đã giao cho shipper
+        if($reorder->status == 2) {
+            $reorder->status = 3;
+        }
+        $reorder->save();
+        return redirect()->route('order.reorder.list',Auth::guard('web')->user()->id)->with('success','Đã cập nhật trạng thái thành công');
+    }
+
+    public function reorderdetail($id) {
+        $data = Orderdetail::with(['order:id,quantity,total', 'receiver:id,name,email,phone,address', 'product:id,name,price,image', 'payment:id,method', 'ship:id,name,price'])
+        ->where('order_id', $id)->get();
+        return response()->json($data, 200);
     }
 }
